@@ -3,25 +3,439 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>justacamera.app — a private camera in your browser</title>
+
+    <title>Webcam &amp; Microphone Test — Private, In Your Browser</title>
     <meta
       name="description"
-      content="Just a camera. Test your webcam and microphone, take photos, and record video — entirely in your browser. Your photos, videos, audio, and camera frames never leave your device."
+      content="Test your webcam and microphone, take photos, and record video — entirely in your browser. Your photos, videos, audio, and camera frames never leave your device. Free, open source, no upload, no accounts, no tracking."
     />
+    <link rel="canonical" href="https://justacamera.app/" />
+
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#0b0d12" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)" />
     <meta name="referrer" content="no-referrer" />
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph (read by Facebook/WhatsApp, LinkedIn, Slack, Discord, etc.; none execute JS, so these live in the static HTML) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="justacamera.app" />
+    <meta
+      property="og:title"
+      content="justacamera.app — private webcam &amp; microphone test in your browser"
+    />
+    <meta
+      property="og:description"
+      content="Test your webcam and microphone, take photos, and record video — entirely in your browser. No upload, no accounts, no tracking. Open source (AGPL-3.0)."
+    />
+    <meta property="og:url" content="https://justacamera.app/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://justacamera.app/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="justacamera.app — a private webcam and microphone test that runs entirely in your browser"
+    />
+
+    <!-- Twitter / X (forces the large card on X and Discord; falls back to Open Graph) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="justacamera.app — private webcam &amp; microphone test" />
+    <meta
+      name="twitter:description"
+      content="Webcam + mic test, photos, and in-browser recording. No upload, no tracking. Open source."
+    />
+    <meta name="twitter:image" content="https://justacamera.app/og-image.png" />
+    <meta
+      name="twitter:image:alt"
+      content="justacamera.app — a private webcam and microphone test that runs entirely in your browser"
+    />
+
+    <!--
+      Structured data. A <script type="application/ld+json"> is an inert DATA block
+      (never executed as script), so it is NOT governed by the CSP `script-src`
+      directive and ships under the strict `script-src 'self'` policy with no hash,
+      nonce, or external file. Keep these the ONLY inline <script> elements on the
+      page so the "no inline executable JS" guarantee is never weakened.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "justacamera.app",
+        "alternateName": "Just a Camera",
+        "url": "https://justacamera.app/",
+        "description": "Privacy-first, fully client-side webcam and microphone test. View a live camera preview, take photos, and record video entirely in your browser. No upload, no accounts, no tracking.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires a browser with getUserMedia and MediaRecorder support",
+        "isAccessibleForFree": true,
+        "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "Live webcam and microphone preview with device selection",
+          "Front and rear camera switching",
+          "Photo capture (JPEG, PNG, WebP) with countdown and mirror controls",
+          "In-browser video recording with pause, resume and playback",
+          "Local-only downloads — no upload",
+          "Privacy diagnostics with a sanitized report"
+        ],
+        "sameAs": ["https://github.com/sevsev9/justacameraapp"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I test my webcam?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open justacamera.app, start the camera test, and allow access when your browser asks. Your live webcam feed appears instantly. Nothing is recorded or uploaded unless you choose to capture and download it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I test my microphone online?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Start the camera test and choose your microphone from the device list. The app confirms the microphone is active, and you can record a short clip and play it back to hear it. Your audio never leaves your device."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is justacamera.app private? Do you upload my video or photos?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. There is no server and no upload. Every operation runs locally in your browser, and your photos, videos, audio, and camera frames never leave your device. The app is open source, so you can verify this in your browser's Network tab — there are no requests while you use the camera."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I record video in my browser without installing anything?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can record video, optionally with microphone audio, entirely in the browser, then play it back and download it locally. There is no account, no install, and nothing is uploaded."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is my webcam not working?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Check that you allowed camera permission, that no other application is currently using the camera, and that the page is loaded over HTTPS. justacamera.app shows a specific message for denied, busy, missing, unsupported, or constrained devices to help you fix it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it work on Windows, macOS, Android and iPhone?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. It works in current Chrome, Edge, Firefox and Safari, including iOS, over HTTPS. Advanced camera controls such as zoom, torch, focus and exposure appear where the device and browser support them."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is justacamera.app free and open source?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. justacamera.app is free and open source under the AGPL-3.0 license. You can read and audit the full source code on GitHub."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use it to test my camera for Zoom, Teams or Google Meet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Use it as a quick pre-call check of your webcam and microphone before joining Zoom, Microsoft Teams or Google Meet, or before going live on Twitch or OBS."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!--
+      Pre-hydration / no-JavaScript content. This static markup is served to every
+      client. Link-preview crawlers and AI crawlers (which do not run JavaScript)
+      read it for the page's content; Vue replaces it on mount for interactive
+      users (createApp(App).mount('#app') clears #app first). Styles are inlined
+      and self-contained so this renders correctly before the app's CSS loads.
+      Allowed by the CSP `style-src 'self' 'unsafe-inline'`.
+    -->
+    <style>
+      #jca-seo {
+        --jca-bg: #0b0d12;
+        --jca-surface: #161b23;
+        --jca-border: #2b333f;
+        --jca-text: #eef1f6;
+        --jca-muted: #aab3c0;
+        --jca-accent: #58a6ff;
+        box-sizing: border-box;
+        min-height: 100vh;
+        margin: 0;
+        padding: 2rem 1.25rem 4rem;
+        background: var(--jca-bg);
+        color: var(--jca-text);
+        font-family:
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        line-height: 1.55;
+        -webkit-text-size-adjust: 100%;
+      }
+      @media (prefers-color-scheme: light) {
+        #jca-seo {
+          --jca-bg: #f6f7f9;
+          --jca-surface: #ffffff;
+          --jca-border: #d3d8e0;
+          --jca-text: #11151c;
+          --jca-muted: #515a68;
+          --jca-accent: #1f6feb;
+        }
+      }
+      #jca-seo * {
+        box-sizing: border-box;
+      }
+      #jca-seo .jca-wrap {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+      #jca-seo .jca-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-weight: 600;
+        font-size: 1.05rem;
+      }
+      #jca-seo .jca-brand svg {
+        width: 32px;
+        height: 32px;
+        flex: none;
+      }
+      #jca-seo h1 {
+        margin: 2rem 0 0.5rem;
+        font-size: clamp(1.8rem, 5vw, 2.4rem);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+      }
+      #jca-seo .jca-sub {
+        margin: 0 0 1.25rem;
+        font-size: 1.15rem;
+        color: var(--jca-muted);
+      }
+      #jca-seo h2 {
+        margin: 2.25rem 0 0.75rem;
+        font-size: 1.3rem;
+        letter-spacing: -0.01em;
+      }
+      #jca-seo p {
+        margin: 0 0 1rem;
+      }
+      #jca-seo ul,
+      #jca-seo ol {
+        margin: 0 0 1rem;
+        padding-left: 1.25rem;
+      }
+      #jca-seo li {
+        margin: 0.3rem 0;
+      }
+      #jca-seo a {
+        color: var(--jca-accent);
+      }
+      #jca-seo details {
+        border: 1px solid var(--jca-border);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        margin: 0.5rem 0;
+        background: var(--jca-surface);
+      }
+      #jca-seo summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+      #jca-seo details p {
+        margin: 0.65rem 0 0.15rem;
+        color: var(--jca-muted);
+      }
+      #jca-seo .jca-note {
+        margin-top: 1.5rem;
+        padding: 0.85rem 1rem;
+        border: 1px dashed var(--jca-border);
+        border-radius: 10px;
+        color: var(--jca-muted);
+        font-size: 0.95rem;
+      }
+      #jca-seo footer {
+        margin-top: 2.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--jca-border);
+        color: var(--jca-muted);
+        font-size: 0.9rem;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    <noscript>
-      <p style="padding: 1rem; font-family: system-ui, sans-serif">
-        justacamera.app needs JavaScript to access your camera and microphone. All processing
-        happens locally in your browser; nothing is uploaded. Please enable JavaScript to continue.
-      </p>
-    </noscript>
+    <div id="app">
+      <main id="jca-seo">
+        <div class="jca-wrap">
+          <div class="jca-brand">
+            <svg viewBox="0 0 32 32" role="img" aria-label="justacamera.app" focusable="false">
+              <rect width="32" height="32" rx="7" fill="#0b0d12" />
+              <rect
+                x="5"
+                y="9"
+                width="22"
+                height="16"
+                rx="3.5"
+                fill="none"
+                stroke="#e8eaf0"
+                stroke-width="2"
+              />
+              <path
+                d="M12 9l1.6-2.4h4.8L20 9"
+                fill="none"
+                stroke="#e8eaf0"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+              <circle cx="16" cy="17.5" r="4.4" fill="none" stroke="#7cc4ff" stroke-width="2" />
+            </svg>
+            <span>justacamera.app</span>
+          </div>
+
+          <h1>Webcam &amp; Microphone Test — Private, In Your Browser</h1>
+          <p class="jca-sub">
+            Test your webcam and microphone, take photos, and record video — entirely in your
+            browser. Your photos, videos, audio, and camera frames never leave your device.
+          </p>
+          <p>
+            Most online webcam tests are full of ads and ask you to trust that they aren&rsquo;t
+            keeping your video. justacamera.app removes the need for trust: there is
+            <strong>no server to send anything to</strong>, and the code is free, open source, and
+            auditable. It works in current Chrome, Edge, Firefox and Safari (including iOS) over
+            HTTPS.
+          </p>
+
+          <noscript>
+            <p class="jca-note">
+              The live camera and microphone test needs JavaScript to access your device. All
+              processing still happens locally in your browser — nothing is uploaded. Please enable
+              JavaScript to start the test.
+            </p>
+          </noscript>
+
+          <h2>What you can do</h2>
+          <ul>
+            <li>View a live webcam preview and select your camera and microphone.</li>
+            <li>Switch between front and rear cameras.</li>
+            <li>Take photos (JPEG, PNG or WebP) with a countdown and mirror controls.</li>
+            <li>Record video in your browser, with pause, resume and instant playback.</li>
+            <li>Save photos and recordings locally — there is no upload.</li>
+            <li>
+              Use advanced controls (zoom, torch, focus, exposure) where your device supports them.
+            </li>
+            <li>Open a privacy diagnostics panel with a sanitized, shareable report.</li>
+          </ul>
+
+          <h2>How it works</h2>
+          <ol>
+            <li>Click start and allow camera access when your browser asks.</li>
+            <li>See your live webcam preview and pick your camera and microphone.</li>
+            <li>Take photos or record video — everything stays in memory on your device.</li>
+            <li>Download what you want to keep; close the tab and the rest is discarded.</li>
+          </ol>
+
+          <h2>Private by design — and provable</h2>
+          <ul>
+            <li>No server, no uploads, no accounts, no cookies, and no analytics.</li>
+            <li>Open source under AGPL-3.0; automated tests enforce the no-upload promise.</li>
+            <li>
+              Verify it live: open your browser&rsquo;s Network tab and you will see no requests
+              while you use the camera.
+            </li>
+          </ul>
+
+          <h2>Frequently asked questions</h2>
+          <details>
+            <summary>How do I test my webcam?</summary>
+            <p>
+              Start the camera test and allow access when your browser asks. Your live webcam feed
+              appears instantly. Nothing is recorded or uploaded unless you choose to capture and
+              download it.
+            </p>
+          </details>
+          <details>
+            <summary>How do I test my microphone online?</summary>
+            <p>
+              Start the test and choose your microphone from the device list. The app confirms the
+              microphone is active, and you can record a short clip and play it back. Your audio
+              never leaves your device.
+            </p>
+          </details>
+          <details>
+            <summary>Is justacamera.app private? Do you upload my video or photos?</summary>
+            <p>
+              No. There is no server and no upload. Every operation runs locally in your browser,
+              and your photos, videos, audio, and camera frames never leave your device. Because the
+              app is open source, you can verify this in your browser&rsquo;s Network tab.
+            </p>
+          </details>
+          <details>
+            <summary>Can I record video in my browser without installing anything?</summary>
+            <p>
+              Yes. You can record video, optionally with microphone audio, entirely in the browser,
+              then play it back and download it locally. No account, no install, nothing uploaded.
+            </p>
+          </details>
+          <details>
+            <summary>Why is my webcam not working?</summary>
+            <p>
+              Check that you allowed camera permission, that no other application is using the
+              camera, and that the page is loaded over HTTPS. justacamera.app shows a specific
+              message for denied, busy, missing, unsupported, or constrained devices.
+            </p>
+          </details>
+          <details>
+            <summary>Does it work on Windows, macOS, Android and iPhone?</summary>
+            <p>
+              Yes. It works in current Chrome, Edge, Firefox and Safari, including iOS, over HTTPS.
+              Advanced camera controls appear where the device and browser support them.
+            </p>
+          </details>
+          <details>
+            <summary>Is justacamera.app free and open source?</summary>
+            <p>
+              Yes. It is free and open source under the AGPL-3.0 license. You can read and audit the
+              full source code on
+              <a href="https://github.com/sevsev9/justacameraapp" rel="noopener">GitHub</a>.
+            </p>
+          </details>
+          <details>
+            <summary>Can I use it to test my camera for Zoom, Teams or Google Meet?</summary>
+            <p>
+              Yes. Use it as a quick pre-call check of your webcam and microphone before joining
+              Zoom, Microsoft Teams or Google Meet, or before going live on Twitch or OBS.
+            </p>
+          </details>
+
+          <footer>
+            justacamera.app — a private camera in your browser.
+            <a href="https://github.com/sevsev9/justacameraapp" rel="noopener"
+              >View the source on GitHub</a
+            >. Free and open source under AGPL-3.0.
+          </footer>
+        </div>
+      </main>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -33,6 +33,13 @@ export default defineConfig({
   },
   build: {
     target: 'es2022',
+    // Disable Vite's modulepreload *polyfill*: it is injected as an INLINE
+    // executable <script>, which the strict CSP (`script-src 'self'`, no
+    // 'unsafe-inline') blocks — silently breaking module loading. Evergreen
+    // browsers support <link rel="modulepreload"> natively, so the polyfill is
+    // unnecessary for the target matrix and dropping it keeps index.html free of
+    // any inline executable script (the only inline <script> is inert JSON-LD).
+    modulePreload: { polyfill: false },
     // No asset is inlined as a data: URI, so the CSP needs no `data:` source.
     assetsInlineLimit: 0,
     sourcemap: false,

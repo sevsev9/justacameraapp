@@ -36,3 +36,10 @@ justacamera.app {
 	try_files {path} /index.html
 	file_server
 }
+
+# Canonical host: 301 www → apex so all link equity folds into one URL
+# (reinforces <link rel="canonical">). Caddy auto-provisions the cert for www
+# if its DNS points here; if www has no DNS this block is simply never hit.
+www.justacamera.app {
+	redir https://justacamera.app{uri} permanent
+}
