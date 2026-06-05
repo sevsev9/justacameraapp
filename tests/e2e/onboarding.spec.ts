@@ -48,6 +48,14 @@ test.describe('onboarding & permission flow', () => {
     await expect(page.getByText(/does not support camera access/i)).toBeVisible()
   })
 
+  test('header exposes a "report an issue" deep-link to GitHub', async ({ page }) => {
+    await page.goto('/')
+    const link = page.getByRole('link', { name: /report a bug or request a feature/i })
+    await expect(link).toHaveAttribute('href', /github\.com\/.+\/issues\/new\/choose$/)
+    await expect(link).toHaveAttribute('target', '_blank')
+    await expect(link).toHaveAttribute('rel', /noopener/)
+  })
+
   test('opens the privacy dialog from the welcome screen', async ({ page }) => {
     await page.goto('/')
     await page.getByRole('button', { name: 'How privacy works' }).click()

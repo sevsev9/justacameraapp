@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { APP_NAME, REPO_URL } from '@/app/app-meta'
+import { issueChooseUrl } from '@/utils/issue-url'
 import type { ThemeChoice } from '@/composables/useTheme'
 import AppIcon from '@/components/AppIcon.vue'
 
 defineProps<{ theme: ThemeChoice }>()
 const emit = defineEmits<{ toggleTheme: []; openPrivacy: [] }>()
+
+const reportUrl = issueChooseUrl(REPO_URL)
 </script>
 
 <template>
@@ -26,6 +29,15 @@ const emit = defineEmits<{ toggleTheme: []; openPrivacy: [] }>()
         aria-label="View source code (opens in a new tab)"
       >
         <AppIcon name="code" :size="20" />
+      </a>
+      <a
+        class="icon-btn header__icon"
+        :href="reportUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Report a bug or request a feature (opens GitHub in a new tab)"
+      >
+        <AppIcon name="bug" :size="20" />
       </a>
       <button
         class="icon-btn header__icon"

@@ -29,6 +29,7 @@ export type IconName =
   | 'code'
   | 'torch'
   | 'shield'
+  | 'bug'
 
 const PATHS: Record<IconName, string> = {
   camera:
@@ -57,6 +58,7 @@ const PATHS: Record<IconName, string> = {
   code: 'M9 8l-5 4 5 4 M15 8l5 4-5 4',
   torch: 'M9 3h6l-1 5h-4z M9 8h6v3l-2 2v6h-2v-6l-2-2z',
   shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4',
+  bug: 'M12 7.5a3 3 0 0 0-3 3v3.5a3 3 0 0 0 6 0v-3.5a3 3 0 0 0-3-3z M9.5 8 8 6 M14.5 8 16 6 M9 11H5.5 M9 14H6 M15 11h3.5 M15 14h3',
 }
 
 const isFilled = (name: IconName) =>

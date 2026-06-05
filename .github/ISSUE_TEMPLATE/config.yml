@@ -1,0 +1,7 @@
+# Funnel new issues through the Bug report / Feature request forms.
+# NOTE: This is an issue-template config, not a CI/CD workflow.
+blank_issues_enabled: false
+contact_links:
+  - name: Questions / hit me up
+    url: https://github.com/sevsev9
+    about: For general questions or to say hi, reach out on my GitHub profile.

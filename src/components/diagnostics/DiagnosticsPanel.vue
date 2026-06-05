@@ -7,11 +7,21 @@
 import { computed, ref } from 'vue'
 import { useCameraSession } from '@/composables/useCameraSession'
 import { diagnosticsService } from '@/services/diagnostics-service'
+import { REPO_URL } from '@/app/app-meta'
+import { bugReportUrl, featureRequestUrl } from '@/utils/issue-url'
 import AppIcon from '@/components/AppIcon.vue'
 
 const s = useCameraSession()
 const report = computed(() => s.buildDiagnostics())
 const copyState = ref<'idle' | 'copied' | 'error'>('idle')
+
+// "Report a bug" opens the GitHub bug form pre-filled with the SANITIZED report
+// (same sanitizer as Copy report — no deviceId/label/media). Feature request has
+// no diagnostics attached. Both are user-initiated navigations the user reviews.
+const bugUrl = computed(() =>
+  bugReportUrl(REPO_URL, { diagnostics: diagnosticsService.toReportText(report.value) }),
+)
+const featureUrl = featureRequestUrl(REPO_URL)
 
 async function copyReport() {
   try {
@@ -104,6 +114,19 @@ const yn = (v: boolean | undefined) => (v === undefined ? '—' : v ? 'Yes' : 'N
       The copied report excludes device IDs, group IDs, raw device labels, and any media — only
       support-useful, non-identifying information is included.
     </p>
+
+    <div class="diag__report">
+      <a class="btn btn--ghost" :href="bugUrl" target="_blank" rel="noopener noreferrer">
+        <AppIcon name="bug" :size="18" /> Report a bug
+      </a>
+      <a class="btn btn--ghost" :href="featureUrl" target="_blank" rel="noopener noreferrer">
+        <AppIcon name="info" :size="18" /> Request a feature
+      </a>
+    </div>
+    <p class="diag__excluded">
+      “Report a bug” opens GitHub with this sanitized report pre-filled — you can review and edit it
+      before submitting.
+    </p>
   </section>
 </template>
 
@@ -169,6 +192,11 @@ const yn = (v: boolean | undefined) => (v === undefined ? '—' : v ? 'Yes' : 'N
 .diag__copy {
   display: flex;
   align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+.diag__report {
+  display: flex;
   gap: var(--space-3);
   flex-wrap: wrap;
 }

@@ -1,0 +1,43 @@
+name: Bug report
+description: Something isn't working in justacamera.app
+title: '[Bug]: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! **justacamera.app runs entirely in your browser** — please don't
+        paste any photos, video, audio, or personal data here. The optional diagnostics below are
+        sanitized (no device IDs, labels, or media).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, and what went wrong?
+      placeholder: I pressed "Start camera" and …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: Browser & device
+      placeholder: e.g. Chrome 1xx on Android 16, or Safari on iOS 18
+    validations:
+      required: false
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics (auto-filled, sanitized — review before submitting)
+      description: >-
+        Auto-filled when you use the in-app "Report a bug" button. Contains only support-useful,
+        non-identifying information (app version, browser engine, negotiated settings, supported
+        formats). No device IDs, labels, or media.
+      render: json
+    validations:
+      required: false
