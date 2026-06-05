@@ -12,5 +12,10 @@ export const REPO_URL =
     ? envRepo
     : 'https://github.com/sevsev9/justacameraapp'
 
+/** Maintainer contact ("Hit me up"); configurable via VITE_AUTHOR_URL. */
+const envAuthor = import.meta.env.VITE_AUTHOR_URL
+export const AUTHOR_URL =
+  typeof envAuthor === 'string' && envAuthor.length > 0 ? envAuthor : 'https://github.com/sevsev9'
+
 export const PRIVACY_PROMISE =
   'Your photos, videos, audio, and camera frames never leave this device.'

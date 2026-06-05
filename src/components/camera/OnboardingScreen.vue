@@ -7,7 +7,7 @@
  */
 import { computed } from 'vue'
 import { useCameraSession } from '@/composables/useCameraSession'
-import { APP_NAME, REPO_URL } from '@/app/app-meta'
+import { APP_NAME, REPO_URL, AUTHOR_URL } from '@/app/app-meta'
 import { isSessionError } from '@/features/camera/session-machine'
 import AppIcon from '@/components/AppIcon.vue'
 
@@ -88,7 +88,8 @@ const errorIcon = computed(() => {
       </div>
 
       <p class="onboarding__why">
-        Hit me up or
+        <a :href="AUTHOR_URL" target="_blank" rel="noopener noreferrer">Hit me up</a>
+        or
         <a :href="REPO_URL" target="_blank" rel="noopener noreferrer">create a PR</a>
         if you want additional features.
       </p>
