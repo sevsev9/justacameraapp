@@ -1,0 +1,38 @@
+# Production deployment for justacamera.app (Caddy).
+# Serves the static Vite build (dist/) over auto-provisioned HTTPS with a strict
+# security-header policy. Keep the directives in sync with
+# config/security-headers.ts — tests/unit/security/security-headers.spec.ts
+# asserts the required tokens are present here.
+#
+# Usage: `caddy run --config deploy/Caddyfile` after `npm run build`.
+
+justacamera.app {
+	root * /srv/justacamera/dist
+	encode zstd gzip
+
+	header {
+		# Strict CSP. script-src 'self' (Vite emits hashed external modules, no
+		# inline scripts). style-src allows 'unsafe-inline' for Vue's runtime
+		# inline style attributes (v-show/:style). blob: for captured-media
+		# previews/downloads. connect-src 'self' blocks all exfiltration.
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self' blob:; font-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+		# Camera + microphone allowed for this origin only; everything else denied.
+		Permissions-Policy "camera=(self), microphone=(self), display-capture=(self), fullscreen=(self), geolocation=(), browsing-topics=(), payment=(), usb=(), serial=(), hid=(), bluetooth=(), accelerometer=(), gyroscope=(), magnetometer=(), midi=()"
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Resource-Policy "same-origin"
+		# COEP intentionally NOT set (no SharedArrayBuffer; it breaks subresources).
+		Strict-Transport-Security "max-age=63072000; includeSubDomains"
+		Referrer-Policy "no-referrer"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		-Server
+	}
+
+	# Long-cache the content-hashed assets.
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
+	# SPA history-mode fallback to index.html.
+	try_files {path} /index.html
+	file_server
+}

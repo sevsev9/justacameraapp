@@ -1,0 +1,26 @@
+# justacamera.app
+
+> A privacy-first, fully client-side web camera app. Test your webcam and
+> microphone, view the live feed, take photos, and record video — entirely in
+> the browser. Your photos, videos, audio, and camera frames never leave the
+> device. No backend, no uploads, no accounts, no tracking.
+
+## What it does
+
+- Live camera preview with device selection (camera + microphone) and front/rear switching.
+- Photo capture (ImageCapture with a universal canvas fallback), countdown, and mirror controls.
+- Local video recording (MediaRecorder, dynamic codec selection), with pause/resume and playback.
+- Local-only downloads (File System Access where available, `<a download>` fallback otherwise).
+- A privacy-preserving diagnostics panel with a sanitized "Copy report" action.
+- Capability-driven advanced camera controls (zoom, torch, focus, exposure, …) where supported.
+
+## Privacy
+
+- All processing is local. The app makes no network requests for any camera, photo,
+  recording, playback, or download operation. There is no server.
+- Device identifiers (deviceId, groupId) and raw device labels never leave the browser
+  and are stripped from any diagnostic export.
+
+## License
+
+AGPL-3.0-or-later. Source: https://github.com/sevsev9/justacameraapp

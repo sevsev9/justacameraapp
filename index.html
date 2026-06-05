@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>justacamera.app — a private camera in your browser</title>
+    <meta
+      name="description"
+      content="Just a camera. Test your webcam and microphone, take photos, and record video — entirely in your browser. Your photos, videos, audio, and camera frames never leave your device."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0b0d12" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript>
+      <p style="padding: 1rem; font-family: system-ui, sans-serif">
+        justacamera.app needs JavaScript to access your camera and microphone. All processing
+        happens locally in your browser; nothing is uploaded. Please enable JavaScript to continue.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
