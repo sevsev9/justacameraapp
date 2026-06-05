@@ -11,14 +11,14 @@ Legend: ✅ verified · 🟡 partial · ⬜ pending · n/a not applicable
 
 | Environment                                     | Engine   | How verified                                                                                   | Status |
 | ----------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------- | ------ |
-| Linux + Chromium (this repo's CI/dev)           | Chromium | Playwright fake-media E2E + Chrome DevTools MCP (welcome/dialogs/themes/responsive/Lighthouse) | ✅     |
+| Linux + Chromium (this repo's dev/test env)     | Chromium | Playwright fake-media E2E + Chrome DevTools MCP (welcome/dialogs/themes/responsive/Lighthouse) | ✅     |
 | Linux + Firefox                                 | Gecko    | Playwright fake-media (non-media + a11y; media specs skipped)                                  | 🟡     |
 | Chrome on Windows                               | Chromium | —                                                                                              | ⬜     |
 | Galaxy S26 Ultra (SM-S948B), Android 16, Chrome | Chromium | adb-driven real-device run (see §"Verified on Galaxy S26 Ultra")                               | ✅     |
 | Chrome on Windows                               | Chromium | —                                                                                              | ⬜     |
 | Edge on Windows                                 | Chromium | —                                                                                              | ⬜     |
 | Firefox on Windows/Linux                        | Gecko    | a11y/onboarding only                                                                           | 🟡     |
-| Safari on macOS                                 | WebKit   | — (no headless fake camera; not in CI)                                                         | ⬜     |
+| Safari on macOS                                 | WebKit   | — (no headless fake camera; not in the test env)                                               | ⬜     |
 | Safari on iOS                                   | WebKit   | —                                                                                              | ⬜     |
 | Samsung Internet                                | Chromium | —                                                                                              | ⬜     |
 

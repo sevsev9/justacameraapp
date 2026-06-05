@@ -41,7 +41,9 @@ npm run validate      # format:check + lint + type-check + unit + build
 npm run test:e2e      # Playwright (needs: npx playwright install chromium firefox)
 ```
 
-All checks also run in CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)).
+CI/CD is intentionally **manual for now** — there is no GitHub Actions workflow.
+Please run the gates locally before opening a PR. (A pipeline can be re-added
+later; the commands above are exactly what it would run.)
 
 ## Pull requests
 

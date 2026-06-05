@@ -34,7 +34,8 @@ accessing the camera — no web app can defend those layers.
 ## Supply chain & deployment
 
 - The only runtime dependency is `vue`. The dependency graph is locked
-  (`package-lock.json`) and `npm audit` runs in CI.
+  (`package-lock.json`) and `npm audit` is run before releases (CI/CD is manual
+  for now).
 - Production should be served over HTTPS with the headers in
   [`deploy/`](deploy) (CSP, Permissions-Policy, HSTS, etc.), which are kept in
   sync with [`config/security-headers.ts`](config/security-headers.ts) by a unit

@@ -69,7 +69,7 @@ install` reports **0 vulnerabilities**.
   capability-driven controls. Gate: unsupported controls can't break preview;
   export excludes identifiers; constraints fail gracefully.
 - **Phase 4 — Security/privacy/deploy/CI.** Headers, privacy tests, deploy
-  configs, CI gates, public docs. Gate: privacy+security reviews pass; no
+  configs, validation gates (run manually), public docs. Gate: privacy+security reviews pass; no
   third-party runtime resources; build+deploy config validate.
 - **Phase 5 — Browser & UX validation.** Chrome DevTools MCP inspection,
   screenshots, console/network/a11y/Lighthouse, responsive, remediation. Gate:
@@ -146,7 +146,7 @@ npm run test:privacy && npm run test:a11y
 
 - [x] security-headers module + Caddy + nginx + sync test
 - [x] Privacy E2E (no-exfil + no-persisted-media) + source guard
-- [x] GitHub Actions CI (format/lint/type/test/build/e2e/a11y/audit/privacy)
+- [x] Validation gates wired as npm scripts (`validate` + `test:e2e`/`test:privacy`/`test:a11y`/`audit:deps`). CI/CD is intentionally manual for now — no GitHub Actions workflow.
 
 ### Phase 5 — Validation
 

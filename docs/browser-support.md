@@ -120,7 +120,7 @@ on return-to-foreground rather than reusing a muted track.
 ## Known limitations (honest)
 
 - **WebKit/Playwright:** no dependable headless fake-camera path, and WebKit is
-  not installed in this repo's CI. Media E2E runs on **Chromium (primary)** and
+  not installed in this repo's test environment. Media E2E runs on **Chromium (primary)** and
   **Firefox (secondary)**; Safari/WebKit media behavior is validated manually
   (see [testing-strategy.md](./testing-strategy.md) and the manual checklist).
 - **Advanced controls** can't be exercised by Chromium fake devices (no

@@ -37,7 +37,7 @@ implemented in this repo.
 - **Mitigations:**
   - Minimal dependency footprint; **one** runtime dependency (`vue`). Everything
     else is dev-only and not shipped to users.
-  - Locked dependency graph (`package-lock.json`), `npm audit` gate in CI.
+  - Locked dependency graph (`package-lock.json`), `npm audit` gate (run manually; CI/CD is manual for now).
   - The **CSP `connect-src 'self'`** means even a malicious dependency cannot
     reach a remote origin from the browser.
   - No third-party runtime scripts/fonts/images — a source-scan test enforces

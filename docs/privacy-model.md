@@ -94,7 +94,8 @@ as a `Blob`.
 
 ## 5. How we prove it (automated, release-blocking)
 
-The following are CI gates; their failure blocks release:
+The following are release gates — run via the npm scripts below (CI/CD is manual
+for now); their failure blocks release:
 
 1. **Unit** — `sanitize.spec.ts`: deviceId/groupId/label/blob/ArrayBuffer/base64/
    blob-url values are redacted; `findSensitiveLeaks` returns empty for a clean

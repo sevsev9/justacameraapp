@@ -140,7 +140,7 @@ src/
 ## Known limitations
 
 - **Safari/WebKit** media flows are validated manually (Playwright has no
-  dependable headless fake camera, and WebKit isn't installed in CI). E2E media
+  dependable headless fake camera, and WebKit isn't installed in the test env). E2E media
   runs on Chromium (primary) and Firefox (secondary).
 - **Advanced controls** (zoom/torch/focus/exposure) depend on the device +
   browser and are largely Android-Chromium-only; they're hidden where
