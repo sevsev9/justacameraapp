@@ -1,4 +1,4 @@
-# justacamera.app
+# [justacamera.app](https://justacamera.app)
 
 **Just a camera. Your photos, videos, audio, and camera frames never leave this
 device.**
