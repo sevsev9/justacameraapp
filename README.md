@@ -3,6 +3,19 @@
 **Just a camera. Your photos, videos, audio, and camera frames never leave this
 device.**
 
+I frequently wanted to test my various cameras, get information on
+them or just take a quick picture using my laptop camera.
+
+I'm running pop os so I was always left looking and then eventually
+having to download some app that I didn't trust and couldn't find the source code.
+
+So one Sunday I just sat down and quickly built this - as you can see this is mostly
+vibe-coded and it is just a tool that I wanted to have so I didn't put too much effort into it.
+
+I put it up mostly for myself but I do hope other people can find use in it as well.
+
+---
+
 A privacy-first, fully client-side web camera app. Test your webcam and
 microphone, view the live feed, take photos, and record video — entirely in your
 browser. No accounts, no installation, no cloud, no backend, no tracking.
